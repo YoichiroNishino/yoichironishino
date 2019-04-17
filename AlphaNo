@@ -1,0 +1,26 @@
+#include <stdio.h>
+void main()
+{
+	int ch;
+	printf("Input character (A - Z or a - z)\n");
+	ch = getchar();
+	
+	if (ch == '\n'){
+		printf("** Error input dat incorrect! **");
+	
+	}else if (getchar() == '\n'){
+	
+		if (ch >= 'a' && ch <= 'z'){
+			printf("** %c is the %d th. **", ch, ch - '`');
+			
+		} else if (ch >= 'A' && ch <= 'Z'){
+			printf("** %c si the %d th. **", ch, ch - '@');
+		
+		} else {
+			printf("** Error input dat incorrect! **");
+		}
+	}
+	else if (ch != '\n'){
+		printf("** Error input dat incorrect! **");
+	}
+}
