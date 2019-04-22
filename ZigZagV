@@ -1,0 +1,33 @@
+#include <stdio.h>
+#define ASTERISKMAX 10
+#define LINEMAX 4
+
+void main(){
+	int i, j, k; /*iはライン、jは段、kは列*/
+	
+	for(i = 1; i <= LINEMAX; i++){ /*LINEMAX個数分ループ*/
+		if (i % 2 == 1){ /*ラインの数が奇数なら*/
+			for (j = 1; j <= ASTERISKMAX; j++){ /*ASTERISKMAX分、段をループ*/
+				for (k = 1; k <= ASTERISKMAX; k++){ /*ASTERISKMAX分、列をループ*/
+					if (j == k){
+						printf("*\n");
+						break;
+					} else {
+						printf(" ");
+					}
+				}
+			}
+		} else if (i % 2 == 0){ /*ラインの数が偶数なら*/
+			for (j = 1; j <= ASTERISKMAX; j++){ /*ASTERISKMAX分,段をループ*/
+				for (k = ASTERISKMAX; k >= 1; k--){ /*ASTERISKMAX1分、列をループ*/
+					if (j == k){
+						printf("*\n");
+						break;
+					} else {
+						printf(" ");
+					}
+				}
+			}
+		}
+	}
+}
