@@ -1,0 +1,115 @@
+#include <stdio.h>
+#define MAX 10 /*要素数*/
+
+int numin(void);
+void main()
+{
+	int i, c, j, array[10], tansaku;/*iはカウンター、cはnuminで返した数値、jはバブルソートのカウンター、array[]は配列、tansakuは検索対象数字*/
+	int tmp, low, high; /*tmpはテンプレート、中央インデックス、lowは左端インデックス、highは右端インデックス*/
+	
+	printf("Input 10 Numeral\n");
+	
+	for (i = 0; i < 10; i++){ /*配列入力数字を10回入力*/
+	
+		c = numin(); /*numin関数呼び出し*/
+		
+		if (c > 0) { /*配列入力数字が0より上なら*/
+			array[i] = c;
+			printf("-> [%d]\n", i); 
+		} else if (c == -1){ /*値がエラーだったら*/
+			printf("\nError\n\n");
+			i--; /*iを1減らす*/
+		} else if (c == 0){ /*値が0だったら*/
+			printf("\nError\n");
+			i--; /*iを1減らす*/
+		}
+	}
+	
+	for (i = MAX - 1; i > 0; i--){ /*バブルソート開始*/
+		for (j = 0; j < i; j++){ /*ソートする範囲の間ループ*/
+			if (array[j] > array[j + 1]){ /*選択要素と次の要素を比較*/
+				tmp = array[j];
+				array[j] = array[j + 1];
+				array[j + 1] = tmp;  /*選択要素と次の要素を交換する*/
+			}
+		}
+	}
+	printf("Sorted Array:\n");
+	for (i = 0; i < MAX; i++){ /*要素数の数だけループ*/
+		printf("[%d]%d ", i, array[i]);
+	}
+	printf("\n\nInput Numeral for Search(End: 0)\n");
+	
+	
+	while(1){ 
+	
+		tansaku = numin(); /*numin関数呼び出し*/
+		low = 0; /*初期化*/
+		high = MAX - 1; /*初期化*/
+					
+		 if (tansaku == -1){ /*返された値が-1だったらエラー表示*/
+			printf("Input Error!\n\n");
+			continue ; /*次のループへ*/
+		} else if (tansaku == 0){ /*0が入力されたら終了*/
+			printf("終了");
+			break;
+		}
+		while (low <= high){ /*二分探索開始*/
+			i = (low + high) /  2; /*中央インデックスを求める*/
+			printf("[%d]%d ->", i, array[i]);
+
+			if (array[i] != tansaku){ /*配列の数値が検索対象数値と同じではなければ*/
+				if (array[i] > tansaku){ /*配列の数値が検索対象数値より上の場合*/
+					high = i - 1; /*右端更新*/
+				} else {
+					low = i + 1; /*左端更新*/
+				}
+			
+			} else {
+				break; /*ループを抜ける*/
+			}
+		}
+		if (low <= high){ /*左端が右端を上回ったら*/
+			printf("Found!\n");
+		} else {
+			printf("Not Found!\n");
+		}
+	}
+}
+/****************************************************************************/
+/* 関数名	:	numin()													    */
+/* 機能		:	キーボードから0以上の整数(10進数)を入力させ、数値化して返す	*/
+/*				                                                       		*/
+/* 引数		:																*/
+/*				   															*/
+/* 戻り値	:	入力された文字が0以上の整数だった場合はその整数、それ以外   */
+/*              はエラーとして-1を返す										*/
+/****************************************************************************/
+int numin(void) /*numin関数を宣言*/
+{
+	int n, num;
+	num = 0;
+
+	
+	if ((n = getchar()) == '\n'){ /*1文字目が\nだった場合*/
+	return -1;
+		
+	} else {
+		while (n != '\n'){ /*'\n'ではない限り継続*/
+		
+			if (n >= '0' && n <= '9'){ /*入力された数字が0以上かつ9以下の時*/
+				num = num * 10 + (n - '0'); /*10進数の数値に変換*/
+				 
+				n = getchar(); /*次の文字を取得*/
+				
+				 
+			} else {
+				while (getchar() != '\n'){ /*バッファクリア*/
+				}
+				return -1;/*-1が返ったらエラーとしてmainに返す*/
+			}
+		}
+		return num; /*正常な値を返す*/
+		
+	}
+}
